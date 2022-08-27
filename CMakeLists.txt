@@ -2,7 +2,7 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 3.0)
 
 #define project name
-PROJECT(ryzenadj)
+PROJECT(ryzenadj VERSION 0.11.1)
 
 set(CMAKE_CXX_STANDARD 11)
 
@@ -37,4 +37,17 @@ target_link_libraries(${PROJECT_NAME} ${OS_LINK_LIBRARY})
 ADD_LIBRARY (libryzenadj SHARED ${OS_SOURCE} ${COMMON_SOURCES})
 set_target_properties(libryzenadj PROPERTIES PREFIX "")
 target_link_libraries(libryzenadj ${OS_LINK_LIBRARY})
-#SET_TARGET_PROPERTIES(libryzenadj PROPERTIES LINKER_LANGUAGE C)
+set_target_properties(libryzenadj PROPERTIES
+                              VERSION ${PROJECT_VERSION}
+                            SOVERSION ${PROJECT_VERSION_MAJOR})
+set_target_properties(libryzenadj PROPERTIES PUBLIC_HEADER "lib/ryzenadj.h;lib/nb_smu_ops.h;lib/ryzenadj_priv.h")
+
+if (UNIX)
+  include(GNUInstallDirs)
+  install(TARGETS ${PROJECT_NAME} libryzenadj
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+        PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+  )
+endif (UNIX)

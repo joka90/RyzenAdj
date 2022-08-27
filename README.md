@@ -128,6 +128,13 @@ The simplest way to build it:
     cmake -DCMAKE_BUILD_TYPE=Release ..
     make
 
+### Package build
+
+On Debian/Ubuntu:
+
+	dpkg-buildpackage -us -uc
+	sudo dpkg -i ../ryzenadj_*.deb ../libryzenadj0_*.deb
+
 ### Windows
 
 It can be built by Visual Studio + MSVC automaticaly, or Clang + Nmake in command line.
