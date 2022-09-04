@@ -113,6 +113,19 @@ jobs:
         cmake DCMAKE_BUILD_TYPE=Release ..
         make
 
+    - name: Install Debian build Dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get -y install devscripts equivs dpkg-dev
+        sudo mk-build-deps -i
+
+    - name: Test debian build
+      run: |
+        gcc --version
+        dpkg-buildpackage -us -uc
+        mkdir -p out
+        mv ../*.*deb out/
+
     - name: Test Scripts
       shell: bash
       run: |
@@ -131,3 +144,9 @@ jobs:
         fi
         exit 0
 
+    - name: Upload ryzenadj Debian
+      uses: actions/upload-artifact@v3
+      with:
+        name: ryzenadj-ubuntu-focal-amd64
+        path: |
+            ./out/*.*deb

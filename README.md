@@ -150,6 +150,9 @@ add allowed users to ryzenadj group
 
 On Debian/Ubuntu:
 
+	sudo apt-get update
+	sudo apt-get -y install devscripts equivs dpkg-dev
+	sudo mk-build-deps -i
 	dpkg-buildpackage -us -uc
 	sudo dpkg -i ../ryzenadj_*.deb ../libryzenadj0_*.deb
 
